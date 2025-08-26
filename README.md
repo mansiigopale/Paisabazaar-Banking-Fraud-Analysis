@@ -65,37 +65,37 @@ The project follows the UBM approach:
 
 **1. Customer Demographics**
 
-Majority of customers are aged 20–40 years, making them the primary target segment.
+* Majority of customers are aged 20–40 years, making them the primary target segment.
 
-Occupation-wise, Lawyers, Engineers, and Developers dominate, reflecting a strong presence of analytical/technical professions.
+* Occupation-wise, Lawyers, Engineers, and Developers dominate, reflecting a strong presence of analytical/technical professions.
 
 **2. Income & Debt Patterns**
 
-Most customers earn ₹20k–₹70k annually (mid-income group).
+* Most customers earn ₹20k–₹70k annually (mid-income group).
 
-Higher income → lower outstanding debt, showing financial stability in high earners.
+* Higher income → lower outstanding debt, showing financial stability in high earners.
 
-Low-income groups carry higher debt and risk, important for credit evaluation.
+* Low-income groups carry higher debt and risk, important for credit evaluation.
 
 **3. Credit Score & Payment Behaviour**
 
-Most customers fall under Standard credit score, with a large portion having Poor scores (high risk).
+* Most customers fall under Standard credit score, with a large portion having Poor scores (high risk).
 
-Payment behavior indicates many customers manage payments responsibly, but a notable share still struggle with dues.
+* Payment behavior indicates many customers manage payments responsibly, but a notable share still struggle with dues.
 
 **4. Spending & Banking Habits**
 
-Customers generally maintain multiple bank accounts (4–8 accounts common) → strong financial inclusion.
+* Customers generally maintain multiple bank accounts (4–8 accounts common) → strong financial inclusion.
 
-Credit utilization ratio fluctuates but shows improvement over months (<30%), which is good for creditworthiness.
+* Credit utilization ratio fluctuates but shows improvement over months (<30%), which is good for creditworthiness.
 
-EMI payments vary widely, highlighting different levels of financial commitments.
+* EMI payments vary widely, highlighting different levels of financial commitments.
 
 **5 Relationships & Correlations**
 
-Annual Income ↔ Monthly Salary shows a strong positive correlation (~0.81).
+* Annual Income ↔ Monthly Salary shows a strong positive correlation (~0.81).
 
-Outstanding Debt ↔ Credit Utilization & EMI are positively related, indicating consistent financial trends.
+* Outstanding Debt ↔ Credit Utilization & EMI are positively related, indicating consistent financial trends.
 
 
 # 📈 Business Impact
