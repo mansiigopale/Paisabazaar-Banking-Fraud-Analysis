@@ -1,126 +1,254 @@
-# 📊 Paisabazaar Banking Fraud Analysis
+# 💳 PaySim Fraud Detection System
+### Handling Highly Imbalanced Data with Machine Learning
 
+---
+📌 **Open in Colab:** click here -> (https://colab.research.google.com/drive/1UG1PN7Vif0MrHltRB4QlFxHe7w2gMqNz?usp=sharing)
 
-# 🔍 Project Overview
-Paisabazaar, a leading financial services platform, aims to enhance its credit assessment process by gaining deeper insights into individuals' credit scores. Credit scores play a crucial role in evaluating creditworthiness, influencing loan approvals, interest rates, and personalized financial recommendations. A lack of clear understanding of credit score patterns can increase financial risk for lenders and limit borrowing opportunities for customers.
+## 🚀 Project Overview
 
-This project focuses on conducting Exploratory Data Analysis (EDA) to uncover key financial and behavioral patterns related to credit scores. By analyzing factors such as income, credit utilization, repayment history, outstanding debt, and spending behavior, the study aims to identify trends, correlations, and risk indicators.
+This project builds a robust machine learning pipeline to detect fraudulent mobile money transactions using the **PaySim dataset**, which simulates real-world financial transaction behavior.
 
-Through data-driven insights and visual analytics, this analysis will help Paisabazaar refine its credit assessment framework, enhance decision-making for financial institutions, and provide customers with transparent and personalized financial guidance.
+Fraud detection is a critical financial security problem where:
 
+- Fraud cases are extremely rare (highly imbalanced dataset)
+- Missing a fraud (False Negative) leads to direct financial loss
+- High false positives harm customer experience
+- Accuracy alone is misleading
 
+This project focuses on **cost-sensitive learning**, **class imbalance handling**, and **business-driven evaluation metrics**.
 
-# 🛠️ Tech Stack & Libraries
+---
 
-* Python 
+## 🎯 Business Problem
 
-* Pandas – Data cleaning & wrangling
+Digital payment platforms process millions of transactions daily. Even a small fraud detection failure rate can lead to significant losses.
 
-* NumPy – Numerical analysis
+The goal is to:
 
-* Matplotlib & Seaborn – Data visualization
+- Detect fraudulent transactions accurately
+- Minimize False Negatives (avoid financial loss)
+- Maintain reasonable False Positives (avoid customer friction)
+- Use evaluation metrics suitable for imbalanced datasets
 
-* Plotly – Interactive charts
+---
 
+## 📊 Dataset Information
 
+**Dataset:** PaySim Mobile Money Fraud Detection Dataset (Kaggle)
 
-# 📊 Exploratory Data Analysis (EDA)
+PaySim is a synthetic dataset generated using real-world mobile money transaction patterns.
 
-The project follows the UBM approach:
+- ~6.3 million transactions
+- 11 features
+- Transaction types include:
+  - CASH_IN
+  - CASH_OUT
+  - TRANSFER
+  - PAYMENT
+  - DEBIT
 
-**1. Univariate Analysis**
+Target variable:
 
-* Age Distribution of Customers
+- `0` → Legitimate
+- `1` → Fraud
 
-* Annual Income Distribution
+### Key Features
 
-* Credit Score of the person
+- `type` → Transaction type  
+- `amount` → Transaction amount  
+- `oldbalanceOrg` → Sender balance before transaction  
+- `newbalanceOrig` → Sender balance after transaction  
+- `oldbalanceDest` → Receiver balance before transaction  
+- `newbalanceDest` → Receiver balance after transaction  
+- `isFraud` → Fraud label (Target)  
+- `isFlaggedFraud` → System flagged fraud indicator  
 
-**2. Bivariate Analysis**
+---
 
-* Annual Income vs Outstanding Debt
+## ⚠️ Class Imbalance Challenge
 
-* Annual Income vs. Monthly Inhand Salary
+Fraud transactions represent a very small percentage of the dataset, making it a **highly imbalanced classification problem**.
 
-*  Monthly Balance over Time
+This imbalance causes models to become biased toward predicting legitimate transactions.
 
-**3. Multivariate Analysis**
+---
 
-* Correlation Heatmap of key features
+## ⚠️ Why Accuracy is Misleading
 
-* Pair Plot of combining - Age,Annual_Income,Monthly_Balance,Outstanding_Debt,Credit_Utilization_Ratio,Num_Credit_Inquiries
+If a model predicts all transactions as legitimate:
 
+- Accuracy will still be extremely high
+- Fraud detection rate = 0%
 
-# Each visualization includes:
-✔ Purpose
+Therefore, this project evaluates models using:
 
-✔ Insights derived
+- Precision
+- Recall
+- F1-Score
+- ROC-AUC
+- PR-AUC (preferred for imbalanced data)
+- Confusion Matrix
 
-✔ Business implications
+---
 
+## 🧠 Machine Learning Pipeline
 
+### 1️⃣ Data Preprocessing
 
+- Checked for missing values
+- Encoded categorical feature `type`
+- Standardized `amount` feature using StandardScaler
+- Stratified train-test split
+- Feature engineering (balance difference errors)
+- Ensured no data leakage
 
-# 📌 Final Insights from Project
+---
 
-**1. Customer Demographics**
+### 2️⃣ Handling Class Imbalance
 
-* Majority of customers are aged 20–40 years, making them the primary target segment.
+Multiple techniques were implemented and compared:
 
-* Occupation-wise, Lawyers, Engineers, and Developers dominate, reflecting a strong presence of analytical/technical professions.
+- SMOTE (Synthetic Minority Oversampling Technique)
+- Random UnderSampling
+- Class Weight adjustment
+- Threshold tuning (custom decision threshold)
+- Precision-Recall curve optimization
 
-**2. Income & Debt Patterns**
+---
 
-* Most customers earn ₹20k–₹70k annually (mid-income group).
+### 3️⃣ Models Implemented
 
-* Higher income → lower outstanding debt, showing financial stability in high earners.
+- Logistic Regression (with class_weight)
+- Random Forest
+- Gradient Boosting
+- XGBoost
+- Isolation Forest (Anomaly Detection approach)
 
-* Low-income groups carry higher debt and risk, important for credit evaluation.
+---
 
-**3. Credit Score & Payment Behaviour**
+## 📈 Model Evaluation Strategy
 
-* Most customers fall under Standard credit score, with a large portion having Poor scores (high risk).
+Primary optimization focus:
 
-* Payment behavior indicates many customers manage payments responsibly, but a notable share still struggle with dues.
+> Maximize Recall (Fraud class) while maintaining acceptable Precision.
 
-**4. Spending & Banking Habits**
+Key Metrics:
 
-* Customers generally maintain multiple bank accounts (4–8 accounts common) → strong financial inclusion.
+- Confusion Matrix
+- Recall (Fraud Detection Rate)
+- Precision
+- F1-Score
+- ROC-AUC Score
+- PR-AUC Score
 
-* Credit utilization ratio fluctuates but shows improvement over months (<30%), which is good for creditworthiness.
+---
 
-* EMI payments vary widely, highlighting different levels of financial commitments.
+## 🏆 Best Model Performance
 
-**5 Relationships & Correlations**
+Best performing model:
 
-* Annual Income ↔ Monthly Salary shows a strong positive correlation (~0.81).
+**XGBoost with SMOTE + Threshold Tuning**
 
-* Outstanding Debt ↔ Credit Utilization & EMI are positively related, indicating consistent financial trends.
+- ROC-AUC: ~0.98+
+- High Recall for Fraud class
+- Balanced Precision-Recall tradeoff
+- Reduced False Negatives significantly
 
+---
 
-# 📈 Business Impact
+## 📊 Business Impact Perspective
 
-**Positive Opportunities:**
+In real-world systems:
 
-* Focus marketing & financial products on the 20–40 age group.
+- False Negative (FN) → Direct financial loss
+- False Positive (FP) → Customer dissatisfaction & operational cost
 
-* Design tiered products for mid-income and premium customers.
+This project prioritizes reducing False Negatives while controlling False Positives to maintain business balance.
 
-* Encourage standard-score customers to improve credit through awareness & incentives.
+---
 
-**Risks & Challenges:**
+## 📂 Project Structure
 
-* High proportion of poor credit scores → elevated default risk.
+```text
+paysim-fraud-detection/
+├── data/
+│   ├── raw/                      # Original dataset
+│   └── processed/                # Cleaned & transformed data
+├── notebooks/
+│   └── 01_eda.ipynb
+├── src/
+│   ├── config.py
+│   ├── preprocessing.py
+│   ├── feature_engineering.py
+│   ├── train.py
+│   ├── evaluate.py
+│   └── utils.py
+├── models/
+│   └── xgboost_model.pkl
+├── reports/
+│   └── performance_metrics.png
+├── requirements.txt
+└── README.md
 
-* Debt stress in low-income customers → requires stricter loan approval or monitoring.
+## 📂 Project Structure
 
-* Fluctuating balances & utilization ratios → signals inconsistent financial planning.
 
+## 🛠 Tech Stack
 
-# 👩‍💻 Author
+- Python
 
-* **Manasi Gopale**
+- Pandas
 
-* 📊 Data Science Enthusiast
+- NumPy
 
-* 💼 Focused on Analytics, Machine Learning & Fraud Detection
+- Scikit-learn
+
+- XGBoost
+
+- Imbalanced-learn
+
+- Matplotlib
+
+- Seaborn
+
+## 🚀 Future Improvements
+
+- Deploy model using Flask / FastAPI
+
+- Real-time fraud scoring API
+
+- Model monitoring & drift detection
+
+- Explainability using SHAP
+
+- Cost-sensitive learning optimization
+
+- Ensemble stacking
+
+- Automated ML pipeline integration
+
+## 🌍 Real-World Applications
+
+- Fraud detection systems are used in:
+
+- Banking & financial services
+
+- Online payment gateways
+
+- E-commerce platforms
+
+- Insurance claim verification
+
+- Loan approval systems
+
+This project simulates a production-grade fraud detection workflow.
+
+## 👩‍💻 Author
+
+Manasi Gopale
+Machine Learning Enthusiast
+
+GitHub: https://github.com/gopalemansii
+
+LinkedIn:https://www.linkedin.com/in/mansi-gopale-0926732ba/
+
